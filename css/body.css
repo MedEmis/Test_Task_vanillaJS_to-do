@@ -1,0 +1,43 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "Conv_Poppins-Regular";
+  src: url("./../assets/fonts/Poppins-Regular.eot");
+  src: local("☺"), url("./../assets/fonts/Poppins-Regular.woff") format("woff"), url("./../assets/fonts/Poppins-Regular.ttf") format("truetype"), url("./../assets/fonts/Poppins-Regular.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.app__todo-wrapper {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 80%;
+          flex: 0 0 80%;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+}
+
+.app__body {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  background: white;
+  padding: calc((3vw + 3vh) / 2) 7% 3% 7%;
+  text-align: center;
+}
+
+.app__body_new-todo {
+  background: #88eaa9;
+  padding: 10px 50px;
+  border-radius: 20px;
+  color: #fff;
+  -webkit-transition: 0.2s linear all;
+  transition: 0.2s linear all;
+}
+
+.app__body_new-todo:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  background: #5de28a;
+}
+/*# sourceMappingURL=body.css.map */

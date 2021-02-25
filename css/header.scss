@@ -1,0 +1,110 @@
+@import "./variables.scss";
+.app {
+	position: relative;
+	min-width: 300px;
+	width: 100%;
+	min-height: 500px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	&__header {
+		position: relative;
+		flex: 0 0 20%;
+		max-height: 175px;
+		min-height: 160px;
+		background: $violet;
+		width: 100%;
+		padding: $header-padding;
+		color: $header-color;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		align-items: center;
+		user-select: none;
+		&::before {
+			content: "";
+			position: absolute;
+			z-index: 2;
+			left: 0;
+			bottom: -32px;
+			width: 32px;
+			height: 32px;
+			background: url("./../assets/violetCorner.svg");
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			z-index: 150;
+			right: 0;
+			bottom: 0px;
+			width: 32px;
+			height: 32px;
+			background: url("./../assets/whiteCorner.svg");
+		}
+		&_title {
+			text-align: center;
+			padding-bottom: 1vh;
+			font-style: normal;
+			font-weight: 900;
+			font-size: $header-font-size;
+			line-height: 20px;
+		}
+		&_stats {
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			&__item {
+				flex: 0 0 $stats-item;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
+		}
+		&_decor {
+			position: absolute;
+			z-index: 5;
+			bottom: -25px;
+			right: calc(50% - 30px);
+			color: $primary-green;
+			background: center / contain no-repeat url("./../assets/decor.svg");
+			width: 48px;
+			height: 48px;
+			border-radius: 11px;
+			cursor: pointer;
+			display: inline-block;
+			transform: scale(1);
+			transition: 0.5s linear all;
+
+			&::after {
+				transition: 0.5s linear all;
+				content: "new todo?";
+				position: absolute;
+				transform: rotate(-45deg);
+				width: 25px;
+				height: 0px;
+				font-size: 1px;
+				top: 25px;
+				right: 20px;
+				opacity: 0;
+			}
+			&:hover {
+				transform: scale(1.1);
+				animation: shake 1000ms alternate infinite;
+				&::after {
+					content: "new todo?";
+					opacity: 1;
+					font-size: 16px;
+					position: absolute;
+					width: 90px;
+					height: 10px;
+					top: -30px;
+					right: -65px;
+				}
+			}
+		}
+	}
+}

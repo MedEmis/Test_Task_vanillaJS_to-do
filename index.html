@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TO-DO app</title>
+	<link rel="stylesheet" href="css/main.css">
+	<script src="index.js" type="text/javascript" defer></script>
+</head>
+
+<body>
+	<main class="app">
+		<section class="app__header">
+			<h1 class="app__header_title">To Do list</h1>
+			<div class="app__header_stats">
+				<div class="app__header_stats__item">
+					<div class="stats">
+						<h6 class="stats__title">Scope</h6>
+						<div id="stats-scope" class="stats__count">15</div>
+					</div>
+				</div>
+				<div class="app__header_stats__item">
+					<div class="stats">
+						<h6 class="stats__title">Active</h6>
+						<div id="stats-active" class="stats__count">8</div>
+					</div>
+				</div>
+				<div class="app__header_stats__item">
+					<div class="stats">
+						<h6 class="stats__title">Succesfull</h6>
+						<div id="stats-succesful" class="stats__count">7</div>
+					</div>
+				</div>
+			</div>
+			<div id="extra-add-todo" class="app__header_decor"></div>
+		</section>
+		<section id="todo-wrapper" class="app__body">
+			<div id="todo-holder" class="app__todo-wrapper"></div>
+			<button id="new-todo" class="app__body_new-todo">New todo</button>
+		</section>
+		<div id="new-popup" class="new-todo-popup ">
+			<div class="new-todo-popup__header">
+				<h2>Create new to-do</h2>
+			</div>
+			<div class="new-todo-popup__body">
+				<form action="#">
+					<span id="popup-tip" class="new-todo-popup__body_tip">
+						Fields cannot be empty
+					</span>
+					<p>Date of your event</p>
+					<input id="popup-input" type="date" name="todo-date" required>
+					<p>What should be done?</p>
+					<textarea id="popup-textarea" type="text" name="todo-text" required></textarea>
+					<div class="new-todo-popup__body_buttons">
+						<button id="add-accept" type="submit" class="new-todo-popup__body_buttons__button">Add
+							to-do</button>
+						<button id="add-decline" type="reset"
+							class="new-todo-popup__body_buttons__button">decline</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

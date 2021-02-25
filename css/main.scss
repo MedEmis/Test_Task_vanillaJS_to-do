@@ -1,0 +1,51 @@
+@import "./null.scss";
+@import "./variables.scss";
+@import "./header.scss";
+@import "./body.scss";
+@import "./todo-item.scss";
+@import "./popup.scss";
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.stats {
+	// .stats__title
+	text-align: center;
+
+	&__title {
+		font-style: normal;
+		font-weight: normal;
+		font-size: $stats-title-font-size;
+		line-height: 16px;
+	}
+
+	&__count {
+		font-style: normal;
+		font-weight: 600;
+		font-size: $stats-font-size;
+		padding: $stats-padding;
+		line-height: 30px;
+	}
+}
+
+@keyframes blink {
+	from {
+		border-bottom: 1px solid #889dea;
+	}
+	to {
+		border-bottom: 1px solid #e7e7e7;
+	}
+}
+
+@keyframes shake {
+	0% {
+		transform: rotate(10deg);
+	}
+
+	100% {
+		transform: rotate(-10deg);
+	}
+}

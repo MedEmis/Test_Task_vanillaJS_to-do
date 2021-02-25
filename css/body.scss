@@ -1,0 +1,29 @@
+@import "./variables.scss";
+.app {
+	&__todo-wrapper {
+		flex: 0 0 80%;
+		width: 100%;
+		height: auto;
+		min-height: ;
+	}
+	&__body {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		overflow-y: auto;
+		background: $body-bg;
+		padding: $body-padding;
+		text-align: center;
+		&_new-todo {
+			background: $primary-green;
+			padding: 10px 50px;
+			border-radius: 20px;
+			color: #fff;
+			transition: 0.2s linear all;
+			&:hover {
+				transform: scale(1.2);
+				background: darken($primary-green, 10%);
+			}
+		}
+	}
+}

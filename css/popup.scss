@@ -1,0 +1,123 @@
+@import "./variables.scss";
+.new-todo-popup {
+	position: fixed;
+	z-index: 50;
+	min-height: 300px;
+	width: 0px;
+	height: auto;
+	background: #fff;
+	border: 1px solid $violet;
+	border-radius: 20px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+	transition: 0.4s linear all;
+	bottom: -340px;
+	transform: scale(0);
+	&.visible {
+		bottom: 30%;
+		transform: scale(1);
+		width: 90vw;
+	}
+
+	&__header {
+		background: $violet;
+		height: 70px;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		h2 {
+			color: #fff;
+			font-size: calc((4vh + 4vw) / 2);
+		}
+		&::before {
+			content: "";
+			position: absolute;
+			z-index: 2;
+			left: 0;
+			bottom: -31px;
+			width: 32px;
+			height: 32px;
+			background: url("./../assets/violetCorner.svg");
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			z-index: 150;
+			right: 0;
+			bottom: -1px;
+			width: 32px;
+			height: 32px;
+			background: url("./../assets/whiteCorner.svg");
+		}
+	}
+
+	&__body {
+		min-height: 75%;
+		height: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 1%;
+		form {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			width: 100%;
+			min-height: 100%;
+			height: auto;
+			input {
+				padding: 5px;
+				border-radius: 10px;
+				box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+				margin-bottom: 20px;
+				transition: 0.1s linear;
+				cursor: pointer;
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+			textarea {
+				padding: 15px;
+				border-radius: 10px;
+				box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+				min-width: 80%;
+				max-width: 80%;
+				min-height: 100px;
+				max-height: 70vh;
+				height: auto;
+			}
+		}
+		&_tip {
+			transition: 0.4s linear all;
+			text-align: center;
+			opacity: 0;
+			height: 0px;
+			width: 200px;
+			color: rgb(240, 104, 50);
+		}
+		&_buttons {
+			width: 100%;
+			height: 40px;
+			margin-top: 20px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&__button {
+				color: #fff;
+				background: $primary-green;
+				border-radius: 20px;
+				width: 120px;
+				margin: 0 5px;
+				text-transform: uppercase;
+				padding: 5px 20px;
+				transition: 0.1s linear;
+				&:hover {
+					transform: scale(1.1);
+					background: darken($primary-green, 10%);
+				}
+			}
+		}
+	}
+}

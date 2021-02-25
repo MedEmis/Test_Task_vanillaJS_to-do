@@ -1,0 +1,173 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "Conv_Poppins-Regular";
+  src: url("./../assets/fonts/Poppins-Regular.eot");
+  src: local("☺"), url("./../assets/fonts/Poppins-Regular.woff") format("woff"), url("./../assets/fonts/Poppins-Regular.ttf") format("truetype"), url("./../assets/fonts/Poppins-Regular.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.app {
+  position: relative;
+  min-width: 300px;
+  width: 100%;
+  min-height: 500px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.app__header {
+  position: relative;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
+  max-height: 175px;
+  min-height: 160px;
+  background: #889dea;
+  width: 100%;
+  padding: 1vh 1vh 3vh 1vw;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.app__header::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: -32px;
+  width: 32px;
+  height: 32px;
+  background: url("./../assets/violetCorner.svg");
+}
+
+.app__header::after {
+  content: "";
+  position: absolute;
+  z-index: 150;
+  right: 0;
+  bottom: 0px;
+  width: 32px;
+  height: 32px;
+  background: url("./../assets/whiteCorner.svg");
+}
+
+.app__header_title {
+  text-align: center;
+  padding-bottom: 1vh;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 100%;
+  line-height: 20px;
+}
+
+.app__header_stats {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.app__header_stats__item {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 30vw;
+          flex: 0 0 30vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.app__header_decor {
+  position: absolute;
+  z-index: 5;
+  bottom: -25px;
+  right: calc(50% - 30px);
+  color: #88eaa9;
+  background: center/contain no-repeat url("./../assets/decor.svg");
+  width: 48px;
+  height: 48px;
+  border-radius: 11px;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+
+.app__header_decor::after {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+  content: "new todo?";
+  position: absolute;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  width: 25px;
+  height: 0px;
+  font-size: 1px;
+  top: 25px;
+  right: 20px;
+  opacity: 0;
+}
+
+.app__header_decor:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  -webkit-animation: shake 1000ms alternate infinite;
+          animation: shake 1000ms alternate infinite;
+}
+
+.app__header_decor:hover::after {
+  content: "new todo?";
+  opacity: 1;
+  font-size: 16px;
+  position: absolute;
+  width: 90px;
+  height: 10px;
+  top: -30px;
+  right: -65px;
+}
+/*# sourceMappingURL=header.css.map */
