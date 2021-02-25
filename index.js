@@ -1,11 +1,19 @@
+//for console
+const success = ['background: green', 'color: white', 'display: block', 'text-align: center'].join(';');
+const failure = ['background: red', 'color: white', 'display: block', 'text-align: center'].join(';');
+//end============================
+
+//api url < json-placeholder >
+const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-do/todo'
+//end============================
 
 const loader = document.querySelector(".web-loader")
 
-const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-do/todo'
-
 //set "app state"
 let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+//end============================
 
+//getting data from DB <jsonDB.json> in repository
 const getData = async (url) => {
 	// will be run at the end code below render function expression
 	try {
@@ -33,8 +41,9 @@ const getData = async (url) => {
 		//switch off loader
 		loader.style.display = "none"
 
+		console.info("%c ---< DATA RECEIVED >---", success);
 	} catch (error) {
-		console.log(error)
+		console.error(`%c ${error}`, failure)
 	}
 }
 //end==========================
@@ -51,9 +60,9 @@ const post_Todo = async (new_Todo) => {
 			}
 		})
 		const result = await response.json();
-		console.log("TODO POSTED")
+		console.info("%c ---< TODO POSTED >---", success);
 	} catch (error) {
-		console.log(error)
+		console.error(`%c ${error}`, failure)
 	}
 }
 //end==========================
@@ -69,9 +78,9 @@ const delete_Todo = async (id) => {
 			}
 		});
 		const result = await response.json();
-		console.log(`TODO ${id} DELETED `)
+		console.info(`%c ---< TODO ${id} DELETED >---`, success);
 	} catch (error) {
-		console.log(error)
+		console.error(`%c ${error}`, failure)
 	}
 }
 //end==========================
@@ -85,9 +94,10 @@ const update_Todo = async (id, new_Todo) => {
 			body: new_Todo
 		});
 		const result = await response.json();
-		console.log(`TODO ${id} UPDATED with  ${new_Todo}`)
+		console.info(`"%c ---< TODO ${id} UPDATED with  \/ >---`, success);
+		console.log(new_Todo)
 	} catch (error) {
-		console.log(error);
+		console.error(`%c ${error}`, failure)
 	}
 }
 //end==========================

@@ -5,12 +5,20 @@ const update_ToDo = (id, newText, newDate, newStatus) => {
 	newDate ? todo.date = format_Date(newDate) : null
 	newStatus ? todo.status = newStatus : null
 
+	const loader = document.querySelector(`.todo-loader-${id}`)
+
+	//switch on loader
+	loader.style.display = "block"
+
 	new Promise((resolve) => {
 		resolve(update_Todo(id, todo))
 	}).then(() => {
 		//set timeout to let animation work before rerender
 		localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== ",")))
+
 		setTimeout(() => render_Todo(todo_Storage), 200);
+		//switch off loader
+		loader.style.display = "none"
 	});
 
 }
