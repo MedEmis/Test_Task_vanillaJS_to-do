@@ -39,6 +39,11 @@ const todo_Header_Handler = (event) => {
 const todo_Body_Handler = (target) => {
 	//getting body
 	const text_Body = target
+
+	text_Body.removeEventListener("touchstart", touch2Mouse, true);
+	text_Body.removeEventListener("touchmove", touch2Mouse, true);
+	text_Body.removeEventListener("touchend", touch2Mouse, true);
+
 	//getting to-do id
 	const id = text_Body.parentNode.attributes.id.value
 	//saving to-do content 
@@ -83,8 +88,15 @@ const todo_Body_Handler = (target) => {
 			text_Body.style.background = "rgb(157, 248, 115)"
 			text_Body.parentNode.classList.remove("animated")
 			setTimeout(() => {
+
 				text_Body.style.background = "rgb(255, 255, 255)"
+
 				update_ToDo(id, inner_Text, null, null)
+
+				text_Body.addEventListener("touchstart", touch2Mouse, true);
+				text_Body.addEventListener("touchmove", touch2Mouse, true);
+				text_Body.addEventListener("touchend", touch2Mouse, true);
+
 			}, 200);
 		}
 	}

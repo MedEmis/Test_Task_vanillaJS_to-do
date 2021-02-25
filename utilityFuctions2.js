@@ -26,6 +26,11 @@ const update_ToDo = (id, newText, newDate, newStatus) => {
 
 //remove todo
 const remove_ToDo = (event) => {
+
+	console.log("event----------", +event.target.id)
+
+	//ивент таргет id  нужно поменять на номер строкой
+
 	const id = +event.target.id
 
 	const loader = document.querySelector(`.todo-loader-${id}`)
