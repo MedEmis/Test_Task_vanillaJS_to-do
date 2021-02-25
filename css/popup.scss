@@ -11,12 +11,15 @@
 	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 	transition: 0.4s linear all;
-	bottom: -340px;
+	bottom: -250px;
 	transform: scale(0);
 	&.visible {
 		bottom: 30%;
 		transform: scale(1);
 		width: 90vw;
+		@media (max-height: 380px) {
+			bottom: 2%;
+		}
 	}
 
 	&__header {

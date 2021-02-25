@@ -232,7 +232,7 @@ h6 {
   position: absolute;
   z-index: 5;
   bottom: -25px;
-  right: calc(50vw- 30px);
+  right: calc(50% - 30px);
   color: #88eaa9;
   background: center/contain no-repeat url("./../assets/decor.svg");
   width: 48px;
@@ -293,7 +293,6 @@ h6 {
           flex: 0 0 80%;
   width: 100%;
   height: auto;
-  min-height: 200px;
 }
 
 .app__body {
@@ -548,7 +547,7 @@ h6 {
   overflow: hidden;
   -webkit-transition: 0.4s linear all;
   transition: 0.4s linear all;
-  bottom: -340px;
+  bottom: -250px;
   -webkit-transform: scale(0);
           transform: scale(0);
 }
@@ -558,6 +557,12 @@ h6 {
   -webkit-transform: scale(1);
           transform: scale(1);
   width: 90vw;
+}
+
+@media (max-height: 380px) {
+  .new-todo-popup.visible {
+    bottom: 2%;
+  }
 }
 
 .new-todo-popup__header {
@@ -734,7 +739,7 @@ body {
   font-style: normal;
   font-weight: 600;
   font-size: calc((3vw + 9vh) / 2);
-  padding: calc((1vw + 2vh) / 2);
+  padding: calc((1vw + 1vh) / 2);
   line-height: 30px;
 }
 
