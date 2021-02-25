@@ -117,7 +117,7 @@ h6 {
 
 .app {
   position: relative;
-  min-width: 300px;
+  min-width: 250px;
   width: 100%;
   min-height: 500px;
   height: 100%;
@@ -232,7 +232,7 @@ h6 {
   position: absolute;
   z-index: 5;
   bottom: -25px;
-  right: calc(50% - 30px);
+  right: calc(50% - 25px);
   color: #88eaa9;
   background: center/contain no-repeat url("./../assets/decor.svg");
   width: 48px;
@@ -249,7 +249,7 @@ h6 {
 .app__header_decor::after {
   -webkit-transition: 0.5s linear all;
   transition: 0.5s linear all;
-  content: "new todo?";
+  content: "new task?";
   position: absolute;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
@@ -269,7 +269,6 @@ h6 {
 }
 
 .app__header_decor:hover::after {
-  content: "new todo?";
   opacity: 1;
   font-size: 16px;
   position: absolute;
@@ -308,6 +307,7 @@ h6 {
 .app__body_new-todo {
   background: #88eaa9;
   padding: 10px 50px;
+  margin-top: 20px;
   border-radius: 20px;
   color: #fff;
   -webkit-transition: 0.2s linear all;
@@ -370,10 +370,11 @@ h6 {
   position: relative;
   margin-left: 3px;
   margin-right: 20px;
-  width: 18px;
+  width: 20px;
   height: 20px;
   border: 1px solid #889dea;
   border-radius: 2px;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -394,15 +395,13 @@ h6 {
 .todo-item__title_checkbox label.checked {
   -webkit-transition: 0.2s linear all;
   transition: 0.2s linear all;
+  background: #889dea;
 }
 
 .todo-item__title_checkbox label.checked::after {
   -webkit-transform: scale(1);
           transform: scale(1);
-  background-image: url("./../assets/checked.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: center no-repeat url("./../assets/checked.svg");
 }
 
 .todo-item__title_checkbox label:hover {
@@ -529,6 +528,125 @@ h6 {
 
 .todo-item__textarea:focus {
   min-height: 100px;
+}
+
+.todo-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  display: none;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #88eaa9;
+  -webkit-animation-timing-function: cubic-bezier(0, 1, 1, 0);
+          animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  -webkit-animation: lds-ellipsis1 0.6s infinite;
+          animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  -webkit-animation: lds-ellipsis2 0.6s infinite;
+          animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  -webkit-animation: lds-ellipsis2 0.6s infinite;
+          animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  -webkit-animation: lds-ellipsis3 0.6s infinite;
+          animation: lds-ellipsis3 0.6s infinite;
+}
+
+@-webkit-keyframes lds-ellipsis1 {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes lds-ellipsis3 {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@-webkit-keyframes lds-ellipsis2 {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(24px, 0);
+            transform: translate(24px, 0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(24px, 0);
+            transform: translate(24px, 0);
+  }
 }
 
 @font-face {
@@ -747,6 +865,144 @@ body {
   font-size: calc((3vw + 9vh) / 2);
   padding: calc((1vw + 1vh) / 2);
   line-height: 30px;
+}
+
+.web-loader {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  width: 81px;
+  height: 81px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: none;
+}
+
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-roller div {
+  -webkit-animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+          animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  -webkit-transform-origin: 40px 40px;
+          transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #889dea;
+  margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+  -webkit-animation-delay: -0.036s;
+          animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+
+.lds-roller div:nth-child(2) {
+  -webkit-animation-delay: -0.072s;
+          animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+
+.lds-roller div:nth-child(3) {
+  -webkit-animation-delay: -0.108s;
+          animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+
+.lds-roller div:nth-child(4) {
+  -webkit-animation-delay: -0.144s;
+          animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+
+.lds-roller div:nth-child(5) {
+  -webkit-animation-delay: -0.18s;
+          animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+
+.lds-roller div:nth-child(6) {
+  -webkit-animation-delay: -0.216s;
+          animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+
+.lds-roller div:nth-child(7) {
+  -webkit-animation-delay: -0.252s;
+          animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+
+.lds-roller div:nth-child(8) {
+  -webkit-animation-delay: -0.288s;
+          animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+
+@-webkit-keyframes lds-roller {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes lds-roller {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes blink {

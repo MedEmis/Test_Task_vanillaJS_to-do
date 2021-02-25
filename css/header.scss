@@ -1,7 +1,7 @@
 @import "./variables.scss";
 .app {
 	position: relative;
-	min-width: 300px;
+	min-width: 250px;
 	width: 100%;
 	min-height: 500px;
 	height: 100%;
@@ -68,7 +68,7 @@
 			position: absolute;
 			z-index: 5;
 			bottom: -25px;
-			right: calc(50% - 30px);
+			right: calc(50% - 25px);
 			color: $primary-green;
 			background: center / contain no-repeat url("./../assets/decor.svg");
 			width: 48px;
@@ -81,7 +81,7 @@
 
 			&::after {
 				transition: 0.5s linear all;
-				content: "new todo?";
+				content: "new task?";
 				position: absolute;
 				transform: rotate(-45deg);
 				width: 25px;
@@ -95,7 +95,6 @@
 				transform: scale(1.1);
 				animation: shake 1000ms alternate infinite;
 				&::after {
-					content: "new todo?";
 					opacity: 1;
 					font-size: 16px;
 					position: absolute;

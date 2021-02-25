@@ -7,11 +7,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TO-DO app</title>
 	<link rel="stylesheet" href="css/main.css">
-	<script src="index.js" type="text/javascript" defer></script>
-	<script src="utilityFunctions1.js" type="text/javascript" defer></script>
-	<script src="eventHandlers.js" type="text/javascript" defer></script>
-	<script src="utilityFuctions2.js" type="text/javascript" defer></script>
-	<script src="render.js" type="text/javascript" defer></script>
+	<!---->
+	<!--ORDER IS IMPORTANT!-->
+	<script order="1" src="index.js" type="text/javascript" defer></script>
+	<script order="2" src="utilityFunctions1.js" type="text/javascript" defer></script>
+	<script order="3" src="eventHandlers.js" type="text/javascript" defer></script>
+	<script order="4" src="utilityFuctions2.js" type="text/javascript" defer></script>
+	<script order="5" src="render.js" type="text/javascript" defer></script>
+	<!---->
 </head>
 
 <body>
@@ -65,6 +68,18 @@
 							class="new-todo-popup__body_buttons__button">decline</button>
 					</div>
 				</form>
+			</div>
+		</div>
+		<div class="web-loader">
+			<div class="lds-roller">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
 			</div>
 		</div>
 	</main>

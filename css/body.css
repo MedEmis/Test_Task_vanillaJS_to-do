@@ -28,6 +28,7 @@
 .app__body_new-todo {
   background: #88eaa9;
   padding: 10px 50px;
+  margin-top: 20px;
   border-radius: 20px;
   color: #fff;
   -webkit-transition: 0.2s linear all;

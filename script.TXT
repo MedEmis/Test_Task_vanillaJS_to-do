@@ -11,16 +11,16 @@ const stats_Successful = document.getElementById("stats-succesful")
 //end=======================
 
 //getting some page elements
-const todo_wrapper = document.getElementById("todo-wrapper")
+const todo_Wrapper = document.getElementById("todo-wrapper")
 const todo_Holder = document.getElementById("todo-holder")
-const new_todo_button = document.getElementById("new-todo")
-const extra_add_todo = document.getElementById("extra-add-todo")
+const new_Todo_Button = document.getElementById("new-todo")
+const extra_Add_Todo = document.getElementById("extra-add-todo")
 const popup = document.getElementById("new-popup")
-const popup_accept = document.getElementById("add-accept")
-const popup_decline = document.getElementById("add-decline")
-const popup_input = document.getElementById("popup-input")
-const popup_textarea = document.getElementById("popup-textarea")
-const popup_tip = document.getElementById("popup-tip")
+const popup_Accept = document.getElementById("add-accept")
+const popup_Decline = document.getElementById("add-decline")
+const popup_Input = document.getElementById("popup-input")
+const popup_Textarea = document.getElementById("popup-textarea")
+const popup_Tip = document.getElementById("popup-tip")
 //==========================
 
 //todo storage
@@ -109,10 +109,10 @@ const create_New_Todo = () => {
 	let input_text = ''
 	const accept_handler = (event) => {
 		event.preventDefault()
-		input_date = popup_input.value
-		input_text = popup_textarea.value
+		input_date = popup_Input.value
+		input_text = popup_Textarea.value
 		//some kind of validation...
-		if (popup_input.value.length && popup_textarea.value.length) {
+		if (popup_Input.value.length && popup_Textarea.value.length) {
 			const newId = 10 + ++todo_Storage.length
 			todo_Storage = [
 				...todo_Storage.filter(item => item !== null),
@@ -124,29 +124,29 @@ const create_New_Todo = () => {
 				}
 			]
 
-			popup_input.value = ''
+			popup_Input.value = ''
 			localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== null)))
 			render_Todo(todo_Storage)
-			popup_textarea.value = ''
+			popup_Textarea.value = ''
 			popup.classList.remove("visible")
-			popup_accept.removeEventListener("click", accept_handler)
+			popup_Accept.removeEventListener("click", accept_handler)
 		} else {
 			// show tip and highlight empty field
-			popup_tip.style.height = "40px"
-			popup_tip.style.opacity = 1
-			!popup_input.value.length && (popup_input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
-			!popup_textarea.value.length && (popup_textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+			popup_Tip.style.height = "40px"
+			popup_Tip.style.opacity = 1
+			!popup_Input.value.length && (popup_Input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+			!popup_Textarea.value.length && (popup_Textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
 			setTimeout(() => {
-				popup_tip.style.height = "0px"
-				popup_tip.style.opacity = 0
-				popup_input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
-				popup_textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+				popup_Tip.style.height = "0px"
+				popup_Tip.style.opacity = 0
+				popup_Input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+				popup_Textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
 			}, 3000);
 		}
 	}
 
-	popup_accept.addEventListener("click", (event) => accept_handler(event))
-	popup_decline.addEventListener("click", () => popup.classList.remove("visible"))
+	popup_Accept.addEventListener("click", (event) => accept_handler(event))
+	popup_Decline.addEventListener("click", () => popup.classList.remove("visible"))
 }
 //end==========================
 
@@ -317,8 +317,8 @@ const render_Todo = (todo_list) => {
 			todo_item.children[0].addEventListener("click", (event) => todo_Header_Handler(event))
 			todo_item.children[1].addEventListener("dblclick", (event) => todo_Body_Handler(event.target))
 		})
-		new_todo_button.addEventListener("click", create_New_Todo)
-		extra_add_todo.addEventListener("click", create_New_Todo)
+		new_Todo_Button.addEventListener("click", create_New_Todo)
+		extra_Add_Todo.addEventListener("click", create_New_Todo)
 	}
 	addListeners()
 	//end===========================

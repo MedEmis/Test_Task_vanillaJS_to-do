@@ -9,7 +9,7 @@
 
 .app {
   position: relative;
-  min-width: 300px;
+  min-width: 250px;
   width: 100%;
   min-height: 500px;
   height: 100%;
@@ -124,7 +124,7 @@
   position: absolute;
   z-index: 5;
   bottom: -25px;
-  right: calc(50% - 30px);
+  right: calc(50% - 25px);
   color: #88eaa9;
   background: center/contain no-repeat url("./../assets/decor.svg");
   width: 48px;
@@ -141,7 +141,7 @@
 .app__header_decor::after {
   -webkit-transition: 0.5s linear all;
   transition: 0.5s linear all;
-  content: "new todo?";
+  content: "new task?";
   position: absolute;
   -webkit-transform: rotate(-45deg);
           transform: rotate(-45deg);
@@ -161,7 +161,6 @@
 }
 
 .app__header_decor:hover::after {
-  content: "new todo?";
   opacity: 1;
   font-size: 16px;
   position: absolute;

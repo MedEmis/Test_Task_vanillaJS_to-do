@@ -1,7 +1,9 @@
 //rendering of todo list
 const render_Todo = (todo_list) => {
-
+	//remove old content
 	todo_Holder.innerHTML = ""
+
+	//render new content
 	todo_list.forEach(todo => {
 		todo_Holder.innerHTML += `
 		<div id="${todo.id}" data-status="${todo.status}" class="todo-item">
@@ -17,10 +19,10 @@ const render_Todo = (todo_list) => {
 			</div>
 			<div class="todo-item__body ${todo.status === successful ? "done" : null}" id="text-body-${todo.id}">${todo.text}</div>
 			<small class="todo-item__body_edit-tip">double click to edit</small>
-		 </div>`
+			<div class="todo-loader todo-loader-${todo.id}" ><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+		</div>`
 	});
 	console.log("rerender")
-
 
 	//updating stats
 	const rendered_todo_List = document.querySelectorAll(".todo-item")
@@ -36,15 +38,14 @@ const render_Todo = (todo_list) => {
 			todo_item.children[0].addEventListener("click", (event) => todo_Header_Handler(event))
 			todo_item.children[1].addEventListener("dblclick", (event) => todo_Body_Handler(event.target))
 		})
-		new_todo_button.addEventListener("click", create_New_Todo)
-		extra_add_todo.addEventListener("click", create_New_Todo)
+		new_Todo_Button.addEventListener("click", create_New_Todo)
+		extra_Add_Todo.addEventListener("click", create_New_Todo)
 	}
 	addListeners()
 	//end===========================
 }
 //end=========================
 
-
-//render of todo list
-render_Todo(todo_Storage)
-//end=======================
+// get data and render of todo list
+getData(url)
+// //end=======================

@@ -1,3 +1,97 @@
+
+const loader = document.querySelector(".web-loader")
+
+const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-do/todo'
+
+//set "app state"
+let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+
+const getData = async (url) => {
+	// will be run at the end code below render function expression
+	try {
+		//switch on loader
+		loader.style.display = "block"
+
+		//if no data in localStorage...
+		if (!JSON.parse(localStorage.getItem("todo_data")) || !JSON.parse(localStorage.getItem("todo_data")).length) {
+			//request data from DB
+			const response = await fetch(url);
+			const data = await response.json();
+
+			//received data => to localStorage
+			new Promise((resolve) => {
+				resolve(localStorage.setItem("todo_data", JSON.stringify(data)))
+			}).then(() => {
+				//adn after render todo list from localStorage
+				todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+				render_Todo(todo_Storage)
+			});
+		}
+		//give "state" to render function to show todo list
+		todo_Storage && render_Todo(todo_Storage)
+
+		//switch off loader
+		loader.style.display = "none"
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+//end==========================
+
+//make post to DB 
+const post_Todo = async (new_Todo) => {
+
+	try {
+		const response = await fetch(url, {
+			method: 'POST',
+			body: JSON.stringify(new_Todo),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		const result = await response.json();
+		console.log("TODO POSTED")
+	} catch (error) {
+		console.log(error)
+	}
+}
+//end==========================
+
+//delete post to DB 
+const delete_Todo = async (id) => {
+
+	try {
+		const response = await fetch(`${url}/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-type': 'application/json'
+			}
+		});
+		const result = await response.json();
+		console.log(`TODO ${id} DELETED `)
+	} catch (error) {
+		console.log(error)
+	}
+}
+//end==========================
+
+//update post to DB 
+const update_Todo = async (id, new_Todo) => {
+
+	try {
+		const response = await fetch(`${url}/${id}`, {
+			method: 'PUT',
+			body: new_Todo
+		});
+		const result = await response.json();
+		console.log(`TODO ${id} UPDATED with  ${new_Todo}`)
+	} catch (error) {
+		console.log(error);
+	}
+}
+//end==========================
+
 //todo status types
 const scope = "scope"
 const active = "active"
@@ -11,76 +105,17 @@ const stats_Successful = document.getElementById("stats-succesful")
 //end=======================
 
 //getting some page elements
-const todo_wrapper = document.getElementById("todo-wrapper")
+const todo_Wrapper = document.getElementById("todo-wrapper")
 const todo_Holder = document.getElementById("todo-holder")
-const new_todo_button = document.getElementById("new-todo")
-const extra_add_todo = document.getElementById("extra-add-todo")
+const new_Todo_Button = document.getElementById("new-todo")
+const extra_Add_Todo = document.getElementById("extra-add-todo")
 const popup = document.getElementById("new-popup")
-const popup_accept = document.getElementById("add-accept")
-const popup_decline = document.getElementById("add-decline")
-const popup_input = document.getElementById("popup-input")
-const popup_textarea = document.getElementById("popup-textarea")
-const popup_tip = document.getElementById("popup-tip")
+const popup_Accept = document.getElementById("add-accept")
+const popup_Decline = document.getElementById("add-decline")
+const popup_Input = document.getElementById("popup-input")
+const popup_Textarea = document.getElementById("popup-textarea")
+const popup_Tip = document.getElementById("popup-tip")
 //==========================
 
-//todo storage
-let data_todo = [
-	{
-		id: 1,
-		date: "24 feb 2021",
-		text: "Make proper layout",
-		status: successful
-	},
-	{
-		id: 2,
-		date: "24 feb 2021",
-		text: "Add pleasant style",
-		status: successful
-	},
-	{
-		id: 3,
-		date: "24 feb 2021",
-		text: "Bind html with js",
-		status: successful
-	},
-	{
-		id: 4,
-		date: "24 feb 2021",
-		text: "Write some logic",
-		status: successful
-	},
-	{
-		id: 5,
-		date: "24 feb 2021",
-		text: "Fix bugs",
-		status: successful
-	},
-	{
-		id: 6,
-		date: "24 feb 2021",
-		text: "Push to Git Hub",
-		status: successful
-	},
-	{
-		id: 7,
-		date: "24 feb 2021",
-		text: "Deploy to Git Hub pages",
-		status: successful
-	},
-	{
-		id: 8,
-		date: "24 feb 2021",
-		text: "Send ready to-do app to the company",
-		status: successful
-	},
-	{
-		id: 9,
-		date: "24 feb 2021",
-		text: "Get response...",
-		status: active
-	},
-]
-localStorage.setItem("todo_data", JSON.stringify(data_todo))
-let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
-//end==========================
+
 

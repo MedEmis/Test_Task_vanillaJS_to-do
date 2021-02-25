@@ -23,43 +23,52 @@ const create_New_Todo = () => {
 	let input_text = ''
 	const accept_handler = (event) => {
 		event.preventDefault()
-		input_date = popup_input.value
-		input_text = popup_textarea.value
+		input_date = popup_Input.value
+		input_text = popup_Textarea.value
 		//some kind of validation...
-		if (popup_input.value.length && popup_textarea.value.length) {
+		if (popup_Input.value.length && popup_Textarea.value.length) {
 			const newId = 10 + ++todo_Storage.length
-			todo_Storage = [
-				...todo_Storage.filter(item => item !== null),
-				{
-					id: newId,
-					date: format_Date(input_date),
-					text: input_text,
-					status: active
-				}
-			]
+			const new_Todo = {
+				id: newId,
+				date: format_Date(input_date),
+				text: input_text,
+				status: active
+			}
 
-			popup_input.value = ''
-			localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== null)))
-			render_Todo(todo_Storage)
-			popup_textarea.value = ''
-			popup.classList.remove("visible")
-			popup_accept.removeEventListener("click", accept_handler)
+			new Promise((resolve) => {
+				resolve(post_Todo(new_Todo))
+			}).then(() => {
+				//update localStorage
+				localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== null)))
+				todo_Storage = [
+					...todo_Storage.filter(item => item !== null),
+					new_Todo
+				]
+				render_Todo(todo_Storage)
+
+				popup_Input.value = ''
+				popup_Textarea.value = ''
+
+				popup.classList.remove("visible")
+				popup_Accept.removeEventListener("click", accept_handler)
+			});
+
 		} else {
 			// show tip and highlight empty field
-			popup_tip.style.height = "40px"
-			popup_tip.style.opacity = 1
-			!popup_input.value.length && (popup_input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
-			!popup_textarea.value.length && (popup_textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+			popup_Tip.style.height = "40px"
+			popup_Tip.style.opacity = 1
+			!popup_Input.value.length && (popup_Input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+			!popup_Textarea.value.length && (popup_Textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
 			setTimeout(() => {
-				popup_tip.style.height = "0px"
-				popup_tip.style.opacity = 0
-				popup_input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
-				popup_textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+				popup_Tip.style.height = "0px"
+				popup_Tip.style.opacity = 0
+				popup_Input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+				popup_Textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
 			}, 3000);
 		}
 	}
 
-	popup_accept.addEventListener("click", (event) => accept_handler(event))
-	popup_decline.addEventListener("click", () => popup.classList.remove("visible"))
+	popup_Accept.addEventListener("click", (event) => accept_handler(event))
+	popup_Decline.addEventListener("click", () => popup.classList.remove("visible"))
 }
 //end==========================
