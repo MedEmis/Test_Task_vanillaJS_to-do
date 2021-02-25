@@ -190,6 +190,12 @@
   background: #5de28a;
 }
 
+.todo-item__body_edit-tip {
+  float: left;
+  font-size: 10px;
+  color: #c4c4c4;
+}
+
 .todo-item__textarea {
   width: 100%;
   min-width: 100%;

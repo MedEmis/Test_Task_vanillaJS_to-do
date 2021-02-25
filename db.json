@@ -1,0 +1,61 @@
+{
+  "todo": [
+    {
+      "id": 1,
+      "date": "24 feb 2021",
+      "text": "Make proper layout",
+      "status": "successful"
+    },
+    {
+      "id": 2,
+      "date": "24 feb 2021",
+      "text": "Add pleasant style",
+      "status": "successful"
+    },
+    {
+      "id": 3,
+      "date": "24 feb 2021",
+      "text": "Bind html with js",
+      "status": "successful"
+    },
+    {
+      "id": 4,
+      "date": "24 feb 2021",
+      "text": "Write some logic",
+      "status": "successful"
+    },
+    {
+      "id": 5,
+      "date": "24 feb 2021",
+      "text": "Fix bugs",
+      "status": "successful"
+    },
+    {
+      "id": 6,
+      "date": "24 feb 2021",
+      "text": "Push to Git Hub",
+      "status": "successful"
+    },
+    {
+      "id": 7,
+      "date": "24 feb 2021",
+      "text": "Deploy to Git Hub pages",
+      "status": "successful"
+    },
+    {
+      "id": 8,
+      "date": "24 feb 2021",
+      "text": "Send ready to-do app to the company",
+      "status": "successful"
+    },
+    {
+      "id": 9,
+      "date": "24 feb 2021",
+      "text": "Get response...",
+      "status": "active"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

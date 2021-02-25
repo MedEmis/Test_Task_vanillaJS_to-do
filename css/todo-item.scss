@@ -130,6 +130,11 @@
 				background: darken($primary-green, 10%);
 			}
 		}
+		&_edit-tip {
+			float: left;
+			font-size: 10px;
+			color: rgb(196, 196, 196);
+		}
 	}
 	&__textarea {
 		width: 100%;
