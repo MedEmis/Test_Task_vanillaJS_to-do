@@ -21,13 +21,30 @@
 }
 
 .app__body_new-todo {
+  position: relative;
   background: #88eaa9;
-  padding: 10px 50px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 10px 22px 10px 54px;
   margin-top: 20px;
-  border-radius: 20px;
+  border-radius: 11px;
   color: #fff;
   -webkit-transition: 0.2s linear all;
   transition: 0.2s linear all;
+}
+
+.app__body_new-todo::after {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  background: center/cover no-repeat url("./../assets/plus.svg");
 }
 
 .app__body_new-todo:hover {
