@@ -148,8 +148,7 @@ const accept_handler = (event) => {
 	if (popup_Input.value.length && popup_Textarea.value.length) {
 
 		//find max id and add 1
-		const newId = Math.max.apply(Math, todo_Storage.map((todo) => todo.id)) + 1
-
+		const newId = todo_Storage.length ? Math.max.apply(Math, todo_Storage.map((todo) => todo.id)) + 1 : 10
 		const new_Todo = {
 			id: newId,
 			date: format_Date(input_date),

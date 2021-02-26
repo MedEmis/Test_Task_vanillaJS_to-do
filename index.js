@@ -9,10 +9,36 @@ const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-
 //end============================
 
 const loader = document.querySelector(".web-loader")
+let isFetching = false
 
 //set "app state"
 let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
 //end============================
+
+//todo status types
+const scope = "scope"
+const active = "active"
+const successful = "successful"
+//end========================
+
+//header stats dashboard
+const stats_Scope = document.getElementById("stats-scope")
+const stats_Active = document.getElementById("stats-active")
+const stats_Successful = document.getElementById("stats-succesful")
+//end=======================
+
+//getting some page elements
+const todo_Wrapper = document.getElementById("todo-wrapper")
+const todo_Holder = document.getElementById("todo-holder")
+const new_Todo_Button = document.getElementById("new-todo")
+const extra_Add_Todo = document.getElementById("extra-add-todo")
+const popup = document.getElementById("new-popup")
+const popup_Accept = document.getElementById("add-accept")
+const popup_Decline = document.getElementById("add-decline")
+const popup_Input = document.getElementById("popup-input")
+const popup_Textarea = document.getElementById("popup-textarea")
+const popup_Tip = document.getElementById("popup-tip")
+//==========================
 
 //getting data from DB <jsonDB.json> in repository
 const getData = async (url) => {
@@ -62,8 +88,10 @@ const getData = async (url) => {
 
 //make post to DB 
 const post_Todo = async (new_Todo) => {
-
+	isFetching = true
 	try {
+
+		popup_Accept.disabled = isFetching
 
 		const response = await fetch(url, {
 			method: 'POST',
@@ -74,6 +102,10 @@ const post_Todo = async (new_Todo) => {
 		})
 
 		const result = await response.json();
+
+		isFetching = false
+
+		popup_Accept.disabled = isFetching
 
 		console.info("%c---< TODO POSTED >---", success);
 
@@ -86,7 +118,7 @@ const post_Todo = async (new_Todo) => {
 
 //delete post to DB 
 const delete_Todo = async (id) => {
-
+	isFetching = true
 	try {
 
 		const response = await fetch(`${url}/${id}`, {
@@ -97,6 +129,8 @@ const delete_Todo = async (id) => {
 		});
 
 		const result = await response.json();
+
+		isFetching = false
 
 		console.info(`%c---< TODO ${id} DELETED >---`, success);
 
@@ -110,7 +144,7 @@ const delete_Todo = async (id) => {
 
 //update post to DB 
 const update_Todo = async (id, new_Todo) => {
-
+	isFetching = true
 	try {
 
 		const response = await fetch(`${url}/${id}`, {
@@ -119,6 +153,8 @@ const update_Todo = async (id, new_Todo) => {
 		});
 
 		const result = await response.json();
+
+		isFetching = false
 
 		console.info(`"%c---< TODO ${id} UPDATED with => >---`, success);
 		console.log(new_Todo)
@@ -131,30 +167,7 @@ const update_Todo = async (id, new_Todo) => {
 }
 //end==========================
 
-//todo status types
-const scope = "scope"
-const active = "active"
-const successful = "successful"
-//end========================
 
-//header stats dashboard
-const stats_Scope = document.getElementById("stats-scope")
-const stats_Active = document.getElementById("stats-active")
-const stats_Successful = document.getElementById("stats-succesful")
-//end=======================
-
-//getting some page elements
-const todo_Wrapper = document.getElementById("todo-wrapper")
-const todo_Holder = document.getElementById("todo-holder")
-const new_Todo_Button = document.getElementById("new-todo")
-const extra_Add_Todo = document.getElementById("extra-add-todo")
-const popup = document.getElementById("new-popup")
-const popup_Accept = document.getElementById("add-accept")
-const popup_Decline = document.getElementById("add-decline")
-const popup_Input = document.getElementById("popup-input")
-const popup_Textarea = document.getElementById("popup-textarea")
-const popup_Tip = document.getElementById("popup-tip")
-//==========================
 
 
 

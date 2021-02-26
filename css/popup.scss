@@ -120,6 +120,9 @@
 					transform: scale(1.1);
 					background: darken($primary-green, 10%);
 				}
+				&:disabled {
+					filter: grayscale(100%);
+				}
 			}
 		}
 	}

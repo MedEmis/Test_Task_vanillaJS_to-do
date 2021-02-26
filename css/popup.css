@@ -185,4 +185,9 @@
           transform: scale(1.1);
   background: #5de28a;
 }
+
+.new-todo-popup__body_buttons__button:disabled {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+}
 /*# sourceMappingURL=popup.css.map */
