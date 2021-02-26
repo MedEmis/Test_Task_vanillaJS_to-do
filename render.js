@@ -19,12 +19,11 @@ const render_Todo = (todo_list) => {
 				</div>
 			</div>
 			<div  class="todo-item__body ${todo.status === successful ? "done" : null}" id="text-body-${todo.id}">${todo.text}</div>
-			<small class="todo-item__body_edit-tip">double click to edit</small>
 			<div class="todo-loader todo-loader-${todo.id}" ><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
 		</div>`
 	});
 
-	console.info("%c ---< RE-RENDER >---", rendering);
+	console.info("%c ---< RE-RENDER >--- ", rendering);
 
 	//updating stats
 	const rendered_todo_List = document.querySelectorAll(".todo-item")
@@ -47,7 +46,6 @@ const render_Todo = (todo_list) => {
 
 			//button listeners
 			todo_item.children[0].addEventListener("click", (event) => todo_Header_Handler(event))
-			todo_item.children[1].addEventListener("dblclick", (event) => todo_Body_Handler(event.target))
 
 			//swipe listeners
 			todo_item.children[1].addEventListener("touchstart", touch2Mouse, true);

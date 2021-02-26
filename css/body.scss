@@ -1,12 +1,8 @@
 @import "./variables.scss";
 .app {
-	&__todo-wrapper {
-		flex: 0 0 80%;
-		width: 100%;
-		height: auto;
-	}
 	&__body {
 		position: relative;
+		flex: 0 0 80%;
 		height: 100%;
 		width: 100%;
 		overflow-y: auto;
@@ -25,5 +21,9 @@
 				background: darken($primary-green, 10%);
 			}
 		}
+	}
+	&__todo-wrapper {
+		width: 100%;
+		height: auto;
 	}
 }

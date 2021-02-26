@@ -50,7 +50,7 @@ const getData = async (url) => {
 		//switch off loader
 		loader.style.display = "none"
 
-		console.info("%c ---< DATA RECEIVED >---", success);
+		console.info("%c---< DATA RECEIVED >---", success);
 
 	} catch (error) {
 
@@ -75,7 +75,7 @@ const post_Todo = async (new_Todo) => {
 
 		const result = await response.json();
 
-		console.info("%c ---< TODO POSTED >---", success);
+		console.info("%c---< TODO POSTED >---", success);
 
 	} catch (error) {
 		console.error(`%c ${error}`, failure)
@@ -98,7 +98,7 @@ const delete_Todo = async (id) => {
 
 		const result = await response.json();
 
-		console.info(`%c ---< TODO ${id} DELETED >---`, success);
+		console.info(`%c---< TODO ${id} DELETED >---`, success);
 
 	} catch (error) {
 
@@ -120,7 +120,7 @@ const update_Todo = async (id, new_Todo) => {
 
 		const result = await response.json();
 
-		console.info(`"%c ---< TODO ${id} UPDATED with => >---`, success);
+		console.info(`"%c---< TODO ${id} UPDATED with => >---`, success);
 		console.log(new_Todo)
 
 	} catch (error) {

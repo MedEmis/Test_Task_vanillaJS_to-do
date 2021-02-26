@@ -30,9 +30,19 @@ const todo_Header_Handler = (event) => {
 			break;
 		case "edit":
 
-			const text_Body = document.getElementById(`text-body-${id}`)
+			if (!event.target.classList.contains("to-save")) {
 
-			todo_Body_Handler(text_Body)
+				//change button style
+				event.target.classList.add("to-save")
+
+				const text_Body = document.getElementById(`text-body-${id}`)
+
+				todo_Body_Handler(text_Body, event.target)
+
+			} else {
+				event.target.classList.remove("to-save")
+
+			}
 
 			break;
 		case "remove":
@@ -49,7 +59,7 @@ const todo_Header_Handler = (event) => {
 //end========================
 
 //todo body event listeners
-const todo_Body_Handler = (target) => {
+const todo_Body_Handler = (target, save_button) => {
 	//getting body
 	const text_Body = target
 
@@ -82,52 +92,42 @@ const todo_Body_Handler = (target) => {
 	//placing cursor inside textarea
 	text_Area.focus()
 
-	//---creating button to save content
-	const save_Button = document.createElement("button")
-
-	//assigning class to button to get proper styles 
-	save_Button.classList.add("todo-item__body_save")
-
-	//adding text and id to button
-	save_Button.innerText = "save"
-
-	save_Button.id = "save"
-	//placing button to to-do body
-	text_Body.appendChild(save_Button)
-
 	//highlighting of border
 	text_Body.parentNode.classList.add("animated")
 
-	//adding event listener to submit changes during in focus
-	text_Body.addEventListener('click', (event) => textarea_handler(event),)
+	//adding event listener to submit changes 
+	save_button.addEventListener('click', (event) => save_handler(event),)
 
 	//submitting handler for textarea
 	//- saving entered content into temporary variable 
 	//- giving content back to to-do body
+	//- removing highlighting of border 
 	//- highlighting body for 200ms to show it was changed
 	//- removing highlighting
-	const textarea_handler = (event) => {
-		if (event.target.id === "save") {
+	const save_handler = (event) => {
 
-			inner_Text = text_Area.value
+		inner_Text = text_Area.value
 
-			text_Body.style.background = "rgb(157, 248, 115)"
+		text_Body.style.background = "rgb(157, 248, 115)"
 
-			text_Body.parentNode.classList.remove("animated")
+		text_Body.parentNode.classList.remove("animated")
 
-			setTimeout(() => {
+		setTimeout(() => {
 
-				text_Body.style.background = "rgb(255, 255, 255)"
+			save_button.classList.remove("to-save")
 
-				update_ToDo(id, inner_Text, null, null)
+			save_button.removeEventListener('click', (event) => save_handler(event),)
 
-				//switch on swipe listeners back
-				text_Body.addEventListener("touchstart", touch2Mouse, true);
-				text_Body.addEventListener("touchmove", touch2Mouse, true);
-				text_Body.addEventListener("touchend", touch2Mouse, true);
+			text_Body.style.background = "rgb(255, 255, 255)"
 
-			}, 200);
-		}
+			update_ToDo(id, inner_Text, null, null)
+
+			//switch on swipe listeners back
+			text_Body.addEventListener("touchstart", touch2Mouse, true);
+			text_Body.addEventListener("touchmove", touch2Mouse, true);
+			text_Body.addEventListener("touchend", touch2Mouse, true);
+
+		}, 200);
 	}
 
 }

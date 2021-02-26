@@ -13,6 +13,9 @@
 	&.animated {
 		animation: blink 800ms alternate infinite;
 	}
+	&[data-status="successful"] {
+		color: $font-success;
+	}
 	&__title {
 		display: flex;
 		justify-content: space-between;
@@ -76,8 +79,13 @@
 				height: 24px;
 				background: url("./../assets/edit.svg");
 				transition: 0.1s linear all;
-				&:hover {
+				&.to-save {
+					width: 20px;
+					height: 20px;
+					margin: 2px;
+					background: center / contain no-repeat url("./../assets/done.svg");
 					transform: scale(1.2);
+					color: $violet;
 				}
 			}
 			&__remove {
@@ -88,13 +96,14 @@
 				transition: 0.1s linear all;
 				&:hover {
 					transform: scale(1.2);
+					color: $violet;
 				}
 			}
 		}
 	}
 	&__body {
 		position: relative;
-		padding: 0 26px;
+		padding: 0 10px;
 		height: auto;
 		font-style: normal;
 		font-weight: normal;
@@ -102,7 +111,7 @@
 		line-height: 22px;
 		text-align: left;
 		padding: 10px;
-		margin-right: 18%;
+		margin-right: 5%;
 		transition: 0.5s linear all;
 		word-break: break-all;
 		max-height: 500px;
@@ -111,24 +120,7 @@
 		&.done {
 			text-decoration-line: line-through;
 		}
-		&_save {
-			position: absolute;
-			width: 50px;
-			height: 25px;
-			line-height: 25px;
-			right: -18%;
-			z-index: 10;
-			text-transform: uppercase;
-			border-radius: 20px;
-			background: $primary-green;
-			text-align: center;
-			color: #fff;
-			transition: 0.2s linear all;
-			&:hover {
-				transform: scale(1.2);
-				background: darken($primary-green, 10%);
-			}
-		}
+
 		&_edit-tip {
 			float: left;
 			font-size: 10px;
@@ -144,7 +136,7 @@
 		font-family: $font-family;
 		background: transparent;
 		&:focus {
-			min-height: 100px;
+			min-height: 50px;
 		}
 	}
 }

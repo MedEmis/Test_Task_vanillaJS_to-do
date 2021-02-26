@@ -11,15 +11,28 @@ body {
 	align-items: center;
 }
 
+.app {
+	position: relative;
+	min-width: 250px;
+	width: 100%;
+	min-height: 250px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .stats {
 	// .stats__title
 	text-align: center;
 
 	&__title {
 		font-style: normal;
-		font-weight: normal;
+		font-weight: 300;
 		font-size: $stats-title-font-size;
 		line-height: 16px;
+		margin-bottom: 5px;
 	}
 
 	&__count {

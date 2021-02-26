@@ -1,26 +1,18 @@
 @import "./variables.scss";
 .app {
-	position: relative;
-	min-width: 250px;
-	width: 100%;
-	min-height: 500px;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
 	&__header {
 		position: relative;
 		flex: 0 0 20%;
-		max-height: 175px;
-		min-height: 160px;
+		// max-height: 20vh;
+		// min-height: 20vh;
+		// height: 20vh;
 		background: $violet;
 		width: 100%;
 		padding: $header-padding;
 		color: $header-color;
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
+		justify-content: center;
 		align-items: center;
 		user-select: none;
 		&::before {
@@ -53,7 +45,7 @@
 		&_stats {
 			width: 100%;
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-between;
 			align-items: center;
 			&__item {
 				flex: 0 0 $stats-item;

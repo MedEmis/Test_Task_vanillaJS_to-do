@@ -27,6 +27,10 @@
           animation: blink 800ms alternate infinite;
 }
 
+.todo-item[data-status="successful"] {
+  color: #bbbbbb;
+}
+
 .todo-item__title {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -124,9 +128,14 @@
   transition: 0.1s linear all;
 }
 
-.todo-item__title_buttons__edit:hover {
+.todo-item__title_buttons__edit.to-save {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  background: center/contain no-repeat url("./../assets/done.svg");
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+  color: #889dea;
 }
 
 .todo-item__title_buttons__remove {
@@ -141,11 +150,12 @@
 .todo-item__title_buttons__remove:hover {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
+  color: #889dea;
 }
 
 .todo-item__body {
   position: relative;
-  padding: 0 26px;
+  padding: 0 10px;
   height: auto;
   font-style: normal;
   font-weight: normal;
@@ -153,7 +163,7 @@
   line-height: 22px;
   text-align: left;
   padding: 10px;
-  margin-right: 18%;
+  margin-right: 5%;
   -webkit-transition: 0.5s linear all;
   transition: 0.5s linear all;
   word-break: break-all;
@@ -165,28 +175,6 @@
 .todo-item__body.done {
   -webkit-text-decoration-line: line-through;
           text-decoration-line: line-through;
-}
-
-.todo-item__body_save {
-  position: absolute;
-  width: 50px;
-  height: 25px;
-  line-height: 25px;
-  right: -18%;
-  z-index: 10;
-  text-transform: uppercase;
-  border-radius: 20px;
-  background: #88eaa9;
-  text-align: center;
-  color: #fff;
-  -webkit-transition: 0.2s linear all;
-  transition: 0.2s linear all;
-}
-
-.todo-item__body_save:hover {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-  background: #5de28a;
 }
 
 .todo-item__body_edit-tip {
@@ -206,7 +194,7 @@
 }
 
 .todo-item__textarea:focus {
-  min-height: 100px;
+  min-height: 50px;
 }
 
 .todo-loader {

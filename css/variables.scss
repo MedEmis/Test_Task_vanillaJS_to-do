@@ -6,15 +6,18 @@ $body-padding: calc((3vw + 3vh) / 2) 7% 3% 7%;
 
 $header-color: rgb(255, 255, 255);
 $header-padding: 1vh 1vh 3vh 1vw;
-$header-font-size: 100%;
+$header-font-size: 150%;
 
 //stats
-$stats-item: 30vw;
-$stats-title-font-size: calc((1vw + 3vh) / 2);
+$stats-item: 20vw;
+$stats-title-font-size: 10;
 $stats-font-size: calc((3vw + 9vh) / 2);
 $stats-padding: calc((1vw + 1vh) / 2);
-$font-family: "Conv_Poppins-Regular";
 //======================
+
+//fonts
+$font-success: #bbbbbb;
+$font-family: "Conv_Poppins-Regular";
 
 @font-face {
 	font-family: "Conv_Poppins-Regular";
