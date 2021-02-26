@@ -1,6 +1,7 @@
 //for console
 const success = ['background: green', 'color: white', 'display: block', 'text-align: center'].join(';');
 const failure = ['background: red', 'color: white', 'display: block', 'text-align: center'].join(';');
+const rendering = ['background: orange', 'color: black', 'display: block', 'text-align: center'].join(';');
 //end============================
 
 //api url < json-placeholder >
@@ -15,25 +16,33 @@ let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
 
 //getting data from DB <jsonDB.json> in repository
 const getData = async (url) => {
+
 	// will be run at the end code below render function expression
 	try {
+
 		//switch on loader
 		loader.style.display = "block"
 
 		//if no data in localStorage...
 		if (!JSON.parse(localStorage.getItem("todo_data")) || !JSON.parse(localStorage.getItem("todo_data")).length) {
+
 			//request data from DB
 			const response = await fetch(url);
 			const data = await response.json();
 
 			//received data => to localStorage
 			new Promise((resolve) => {
+
 				resolve(localStorage.setItem("todo_data", JSON.stringify(data)))
+
 			}).then(() => {
-				//adn after render todo list from localStorage
+
+				//anf after render todo list from localStorage
 				todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+
 				render_Todo(todo_Storage)
-			});
+
+			}).catch(console.log.bind(console));
 		}
 		//give "state" to render function to show todo list
 		todo_Storage && render_Todo(todo_Storage)
@@ -42,8 +51,11 @@ const getData = async (url) => {
 		loader.style.display = "none"
 
 		console.info("%c ---< DATA RECEIVED >---", success);
+
 	} catch (error) {
+
 		console.error(`%c ${error}`, failure)
+
 	}
 }
 //end==========================
@@ -52,6 +64,7 @@ const getData = async (url) => {
 const post_Todo = async (new_Todo) => {
 
 	try {
+
 		const response = await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(new_Todo),
@@ -59,10 +72,14 @@ const post_Todo = async (new_Todo) => {
 				"Content-type": "application/json; charset=UTF-8"
 			}
 		})
+
 		const result = await response.json();
+
 		console.info("%c ---< TODO POSTED >---", success);
+
 	} catch (error) {
 		console.error(`%c ${error}`, failure)
+
 	}
 }
 //end==========================
@@ -71,16 +88,22 @@ const post_Todo = async (new_Todo) => {
 const delete_Todo = async (id) => {
 
 	try {
+
 		const response = await fetch(`${url}/${id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-type': 'application/json'
 			}
 		});
+
 		const result = await response.json();
+
 		console.info(`%c ---< TODO ${id} DELETED >---`, success);
+
 	} catch (error) {
+
 		console.error(`%c ${error}`, failure)
+
 	}
 }
 //end==========================
@@ -89,15 +112,21 @@ const delete_Todo = async (id) => {
 const update_Todo = async (id, new_Todo) => {
 
 	try {
+
 		const response = await fetch(`${url}/${id}`, {
 			method: 'PUT',
 			body: new_Todo
 		});
+
 		const result = await response.json();
-		console.info(`"%c ---< TODO ${id} UPDATED with  \/ >---`, success);
+
+		console.info(`"%c ---< TODO ${id} UPDATED with => >---`, success);
 		console.log(new_Todo)
+
 	} catch (error) {
+
 		console.error(`%c ${error}`, failure)
+
 	}
 }
 //end==========================

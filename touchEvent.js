@@ -18,7 +18,7 @@ function touch2Mouse(e) {
 		}
 	}
 
-
+	//swipe on todo to remove it
 	switch (e.type) {
 		case "touchstart": touch_Start = e.changedTouches[0].pageX; break;
 		case "touchend": {
