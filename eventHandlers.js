@@ -148,7 +148,7 @@ const accept_handler = (event) => {
 	if (popup_Input.value.length && popup_Textarea.value.length) {
 
 		//find max id and add 1
-		const newId = todo_Storage.length ? Math.max.apply(Math, todo_Storage.map((todo) => todo.id)) + 1 : 10
+		const newId = todo_Storage.length ? Math.max.apply(Math, todo_Storage.map((todo) => todo.id)) + 1 : 1
 		const new_Todo = {
 			id: newId,
 			date: format_Date(input_date),
@@ -177,6 +177,10 @@ const accept_handler = (event) => {
 
 			//hide popup
 			popup.classList.remove("visible")
+
+			isFetching = false
+
+			popup_Accept.disabled = isFetching
 
 			render_Todo(todo_Storage)
 

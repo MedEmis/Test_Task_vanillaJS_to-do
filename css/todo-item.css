@@ -123,6 +123,7 @@
 .todo-item__title_buttons__edit {
   width: 24px;
   height: 24px;
+  color: #000;
   background: url("./../assets/edit.svg");
   -webkit-transition: 0.1s linear all;
   transition: 0.1s linear all;
@@ -138,6 +139,12 @@
   color: #889dea;
 }
 
+.todo-item__title_buttons__edit:hover {
+  background: url("./../assets/edit-active.svg");
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
 .todo-item__title_buttons__remove {
   width: 24px;
   height: 24px;
@@ -148,9 +155,9 @@
 }
 
 .todo-item__title_buttons__remove:hover {
+  background: url("./../assets/trash-active.svg");
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
-  color: #889dea;
 }
 
 .todo-item__body {

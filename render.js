@@ -23,7 +23,7 @@ const render_Todo = (todo_list) => {
 		</div>`
 	});
 
-	console.info("%c ---< RE-RENDER >--- ", rendering);
+	console.info("%c ---< RENDER >--- ", rendering);
 
 	//updating stats
 	const rendered_todo_List = document.querySelectorAll(".todo-item")

@@ -80,8 +80,8 @@
 
 .app__header_stats__item {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 20vw;
-          flex: 0 0 20vw;
+      -ms-flex: 0 0 25vw;
+          flex: 0 0 25vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

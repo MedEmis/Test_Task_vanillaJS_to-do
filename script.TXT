@@ -1,3 +1,114 @@
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+var firebaseConfig = {
+	apiKey: "AIzaSyD-K4XUIh0LlELfnQGEYszH3VkygZyOUao",
+	authDomain: "vanilla-js-to-do-app.firebaseapp.com",
+	databaseURL: "https://vanilla-js-to-do-app-default-rtdb.europe-west1.firebasedatabase.app",
+	projectId: "vanilla-js-to-do-app",
+	storageBucket: "vanilla-js-to-do-app.appspot.com",
+	messagingSenderId: "916813732290",
+	appId: "1:916813732290:web:0cc7a635f2e339578b5e5b",
+	measurementId: "G-GS8RJN60LB"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+
+//for console
+const success = ['background: green', 'color: white', 'display: block', 'text-align: center'].join(';');
+const failure = ['background: red', 'color: white', 'display: block', 'text-align: center'].join(';');
+const rendering = ['background: orange', 'color: black', 'display: block', 'text-align: center'].join(';');
+//end============================
+
+//api url < json-placeholder >
+const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-do/todo'
+//end============================
+
+//firebase C.R.U.D methods
+//firebase data base
+const database = firebase.database()
+
+//todo root short-hand
+const todo_Root = (id) => database.ref(`/todo/${id}`)
+
+//firebase notifier about changes in database 
+const app_notify_About = (event, id) => {
+
+	//listeners from firebase
+	const events = {
+		value: "value",//working on update
+		create: "child_added",
+		update: "child_changed",//?not working on update?
+		delete: "child_removed",
+		moved: "child_moved"
+	}
+
+	//triggering any action depends on action type
+	database.ref("todo").once(events[event], () => {
+
+		//in case of update
+		if (event === "value") {
+
+			//asking about what exactly was changed
+			database.ref("todo").child(id).on("value", (update) => {
+				console.info(`%c---< FIREBASE UPDATED >---`, success);
+				console.table(update.val());
+			})
+		} else {
+
+			//executing action
+			console.info(`%c---< FIREBASE ${events[event].toUpperCase()} >---`, success);
+		}
+	})
+}
+
+const firebase_CREATE = (todo) => {
+
+	app_notify_About("create")
+
+	todo_Root(todo.id).set(todo)
+}
+
+const firebase_READ = async () => {
+
+	app_notify_About("update")
+
+	await database.ref("todo").once('value')
+		.then((snapshot) => {
+			console.log(snapshot.val())
+			localStorage.setItem("todo_data", JSON.stringify(snapshot.val().filter(item => item !== null)))
+		}).catch((error) => {
+			console.error(`%c ${error}`, failure)
+		})
+}
+
+const firebase_UPDATE = async (todo,) => {
+
+	app_notify_About("value", todo.id)
+
+	//can update old or create new field in object
+	await todo_Root(todo.id).update(todo)
+}
+
+const firebase_DELETE = async (id) => {
+
+	app_notify_About("delete")
+
+	await todo_Root(id).remove()
+}
+
+const loader = document.querySelector(".web-loader")
+//switch on loader
+loader.style.display = "block"
+let isFetching = false
+//firebase C.R.U.D methods end============================
+
+
+//set "app state"
+let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+//end============================
+
 //todo status types
 const scope = "scope"
 const active = "active"
@@ -23,145 +134,207 @@ const popup_Textarea = document.getElementById("popup-textarea")
 const popup_Tip = document.getElementById("popup-tip")
 //==========================
 
-//todo storage
-let data_todo = [
-	{
-		id: 1,
-		date: "24 feb 2021",
-		text: "Make proper layout",
-		status: successful
-	},
-	{
-		id: 2,
-		date: "24 feb 2021",
-		text: "Add pleasant style",
-		status: successful
-	},
-	{
-		id: 3,
-		date: "24 feb 2021",
-		text: "Bind html with js",
-		status: successful
-	},
-	{
-		id: 4,
-		date: "24 feb 2021",
-		text: "Write some logic",
-		status: successful
-	},
-	{
-		id: 5,
-		date: "24 feb 2021",
-		text: "Fix bugs",
-		status: successful
-	},
-	{
-		id: 6,
-		date: "24 feb 2021",
-		text: "Push to Git Hub",
-		status: successful
-	},
-	{
-		id: 7,
-		date: "24 feb 2021",
-		text: "Deploy to Git Hub pages",
-		status: successful
-	},
-	{
-		id: 8,
-		date: "24 feb 2021",
-		text: "Send ready to-do app to the company",
-		status: successful
-	},
-	{
-		id: 9,
-		date: "24 feb 2021",
-		text: "Get response...",
-		status: active
-	},
-]
-localStorage.setItem("todo_data", JSON.stringify(data_todo))
-let todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+//getting data from DB <jsonDB.json> in repository
+const getData = async (url) => {
+	// will be run at the end code below render function expression
+	try {
+
+
+
+		//if no data in localStorage...
+		if (!JSON.parse(localStorage.getItem("todo_data")) || !JSON.parse(localStorage.getItem("todo_data")).length) {
+
+			// --- for json placeholder --- 
+			// //request data from DB
+			// const response = await fetch(url);
+			// const data = await response.json();
+			//end===========================
+
+			//received data => to localStorage
+			new Promise((resolve) => {
+
+				// --- for json placeholder --- 
+				//resolve(localStorage.setItem("todo_data", JSON.stringify(data)))
+				//end===========================
+
+				//getting data from firebase and save in local storage 
+				resolve(firebase_READ())
+
+			}).then(() => {
+
+
+				//anf after render todo list from localStorage
+				todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
+
+				console.log("daddada", todo_Storage)
+
+				render_Todo(todo_Storage)
+
+			}).catch(console.log.bind(console));
+		}
+		//give "state" to render function to show todo list
+		todo_Storage && render_Todo(todo_Storage)
+
+		//switch off loader
+		loader.style.display = "none"
+
+		console.info("%c---< APP DATA RECEIVED >---", success);
+
+	} catch (error) {
+
+		console.error(`%c ${error}`, failure)
+
+	}
+}
+
 //end==========================
+
+//make post to DB 
+const post_Todo = async (new_Todo) => {
+
+	try {
+		isFetching = true
+
+		//temporary disable accept button
+		popup_Accept.disabled = isFetching
+
+		// --- for json placeholder --- 
+		// const response = await fetch(url, {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(new_Todo),
+		// 	headers: {
+		// 		"Content-type": "application/json; charset=UTF-8"
+		// 	}
+		// })
+		// const result = await response.json();
+		//end===========================
+
+		//create request to firebase
+		firebase_CREATE(new_Todo)
+
+		isFetching = false
+
+		console.info("%c---< APP TODO POSTED >---", success);
+
+	} catch (error) {
+		console.error(`%c ${error}`, failure)
+
+	}
+}
+//end==========================
+
+//delete post to DB 
+const delete_Todo = async (id) => {
+	isFetching = true
+	try {
+
+		// --- for json placeholder --- 
+		// const response = await fetch(`${url}/${id}`, {
+		// 	method: 'DELETE',
+		// 	headers: {
+		// 		'Content-type': 'application/json'
+		// 	}
+		// });
+		// const result = await response.json();
+		//end===========================
+
+		firebase_DELETE(id)
+
+		isFetching = false
+
+		console.info(`%c---< APP TODO ${id} DELETED >---`, success);
+
+	} catch (error) {
+
+		console.error(`%c ${error}`, failure)
+
+	}
+}
+//end==========================
+
+//update post to DB 
+const update_Todo = async (id, new_Todo) => {
+	isFetching = true
+	try {
+
+		// --- for json placeholder --- 
+		// const response = await fetch(`${url}/${id}`, {
+		// 	method: 'PUT',
+		// 	body: new_Todo
+		// });
+		// const result = await response.json();
+		//end===========================
+
+		firebase_UPDATE(new_Todo)
+
+		isFetching = false
+
+		console.info(`%c---< APP TODO ${id} UPDATED with => >---`, success);
+
+	} catch (error) {
+
+		console.error(`%c ${error}`, failure)
+
+	}
+}
+//end==========================
+
 
 //function to format date from input
 const format_Date = (date) => {
 	//creating date
 	let today = new Date();
+
 	let dd = String(today.getDate()).padStart(2, "0");
+
 	let mm = String(today.getMonth() + 1).padStart(2, "0");
+
 	let yyyy = today.getFullYear();
+
 	const month = { "01": "jan", "02": "feb", "03": "march", "04": "april", "05": "may", "06": "june", "07": "july", "08": "aug", "09": "sept", "10": "oct", "11": "nov", "12": "dec" }
+
 	today = `${dd} ${month[mm]} ${yyyy}`;
 	//end=================================
 
 	//convert standard format  
 	let reversed = date.split("-").reverse()
+
 	reversed[1] = month[reversed[1]]//changing '02' to -> "feb"
+
 	return reversed.join(" ")
 }
-//=============================
+//end=============================
 
 //todo creator
 const create_New_Todo = () => {
+
+	popup_Accept.removeEventListener("click", accept_handler, true)
+
+	popup_Accept.addEventListener("click", accept_handler, false)
+
+	popup_Decline.addEventListener("click", () => popup.classList.remove("visible"), false)
+
 	popup.classList.add("visible")
-	let input_date = ''
-	let input_text = ''
-	const accept_handler = (event) => {
-		event.preventDefault()
-		input_date = popup_Input.value
-		input_text = popup_Textarea.value
-		//some kind of validation...
-		if (popup_Input.value.length && popup_Textarea.value.length) {
-			const newId = 10 + ++todo_Storage.length
-			todo_Storage = [
-				...todo_Storage.filter(item => item !== null),
-				{
-					id: newId,
-					date: format_Date(input_date),
-					text: input_text,
-					status: active
-				}
-			]
 
-			popup_Input.value = ''
-			localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== null)))
-			render_Todo(todo_Storage)
-			popup_Textarea.value = ''
-			popup.classList.remove("visible")
-			popup_Accept.removeEventListener("click", accept_handler)
-		} else {
-			// show tip and highlight empty field
-			popup_Tip.style.height = "40px"
-			popup_Tip.style.opacity = 1
-			!popup_Input.value.length && (popup_Input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
-			!popup_Textarea.value.length && (popup_Textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
-			setTimeout(() => {
-				popup_Tip.style.height = "0px"
-				popup_Tip.style.opacity = 0
-				popup_Input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
-				popup_Textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
-			}, 3000);
-		}
-	}
-
-	popup_Accept.addEventListener("click", (event) => accept_handler(event))
-	popup_Decline.addEventListener("click", () => popup.classList.remove("visible"))
 }
 //end==========================
 
-
 //todo header event listeners
 const todo_Header_Handler = (event) => {
+
 	//getting todo header
 	const element = event.target
+
 	//element type
 	const type = element.dataset.type
+
 	//element id 
 	const id = element.id
+
 	//handle event depending on element type
 	switch (type) {
 		case "checkbox":
+
 			if (Array.from(element.classList).includes("checked")) {
 				element.classList.remove("checked")
 				update_ToDo(id, null, null, active)
@@ -169,16 +342,34 @@ const todo_Header_Handler = (event) => {
 				element.classList.add("checked")
 				update_ToDo(id, null, null, successful)
 			}
+
 			break;
 		case "date":
+
 			change_Date(event)
+
 			break;
 		case "edit":
-			const text_Body = document.getElementById(`text-body-${id}`)
-			todo_Body_Handler(text_Body)
+
+			if (!event.target.classList.contains("to-save")) {
+
+				//change button style
+				event.target.classList.add("to-save")
+
+				const text_Body = document.getElementById(`text-body-${id}`)
+
+				todo_Body_Handler(text_Body, event.target)
+
+			} else {
+				event.target.classList.remove("to-save")
+
+			}
+
 			break;
 		case "remove":
+
 			remove_ToDo(event)
+
 			break;
 		default:
 			break;
@@ -189,93 +380,246 @@ const todo_Header_Handler = (event) => {
 //end========================
 
 //todo body event listeners
-const todo_Body_Handler = (target) => {
+const todo_Body_Handler = (target, save_button) => {
 	//getting body
 	const text_Body = target
+
+	//switch off swipe listeners
+	text_Body.removeEventListener("touchstart", touch2Mouse, true);
+	text_Body.removeEventListener("touchmove", touch2Mouse, true);
+	text_Body.removeEventListener("touchend", touch2Mouse, true);
+
 	//getting to-do id
 	const id = text_Body.parentNode.attributes.id.value
+
 	//saving to-do content 
 	let inner_Text = target.innerText
+
 	//removing old to-do content
 	text_Body.innerHTML = ""
 
 	//---creating textarea to change to-do content
 	const text_Area = document.createElement("textarea")
+
 	//assigning class to textarea to get proper styles 
 	text_Area.classList.add("todo-item__textarea")
+
 	//placing textarea to to-do body
 	text_Body.appendChild(text_Area)
+
 	//giving to textarea initial content
 	text_Area.value = inner_Text
+
 	//placing cursor inside textarea
 	text_Area.focus()
 
-	//---creating button to save content
-	const save_Button = document.createElement("button")
-	//assigning class to button to get proper styles 
-	save_Button.classList.add("todo-item__body_save")
-	//adding text and id to button
-	save_Button.innerText = "save"
-	save_Button.id = "save"
-	//placing button to to-do body
-	text_Body.appendChild(save_Button)
-
-
 	//highlighting of border
 	text_Body.parentNode.classList.add("animated")
-	//adding event listener to submit changes during in focus
-	text_Body.addEventListener('click', (event) => textarea_handler(event),)
+
+	//adding event listener to submit changes 
+	save_button.addEventListener('click', (event) => save_handler(event),)
+
 	//submitting handler for textarea
 	//- saving entered content into temporary variable 
 	//- giving content back to to-do body
+	//- removing highlighting of border 
 	//- highlighting body for 200ms to show it was changed
 	//- removing highlighting
-	const textarea_handler = (event) => {
-		if (event.target.id === "save") {
-			inner_Text = text_Area.value
-			text_Body.style.background = "rgb(157, 248, 115)"
-			text_Body.parentNode.classList.remove("animated")
-			setTimeout(() => {
-				text_Body.style.background = "rgb(255, 255, 255)"
-				update_ToDo(id, inner_Text, null, null)
-			}, 200);
-		}
+	const save_handler = (event) => {
+
+		inner_Text = text_Area.value
+
+		text_Body.style.background = "rgb(157, 248, 115)"
+
+		text_Body.parentNode.classList.remove("animated")
+
+		setTimeout(() => {
+
+			save_button.classList.remove("to-save")
+
+			save_button.removeEventListener('click', (event) => save_handler(event),)
+
+			text_Body.style.background = "rgb(255, 255, 255)"
+
+			update_ToDo(id, inner_Text, null, null)
+
+			//switch on swipe listeners back
+			text_Body.addEventListener("touchstart", touch2Mouse, true);
+			text_Body.addEventListener("touchmove", touch2Mouse, true);
+			text_Body.addEventListener("touchend", touch2Mouse, true);
+
+		}, 200);
 	}
 
 }
 //end========================
 
+
+
+
+
+//create todo accept handler
+const accept_handler = (event) => {
+	event.preventDefault()
+
+	input_date = popup_Input.value
+	input_text = popup_Textarea.value
+
+	//some kind of validation...
+	if (popup_Input.value.length && popup_Textarea.value.length) {
+
+		//find max id and add 1
+		const newId = todo_Storage.length ? Math.max.apply(Math, todo_Storage.map((todo) => todo.id)) + 1 : 1
+		const new_Todo = {
+			id: newId,
+			date: format_Date(input_date),
+			text: input_text,
+			status: active
+		}
+
+		new Promise((resolve) => {
+
+			//make request to server
+			resolve(post_Todo(new_Todo))
+
+		}).then(() => {
+
+			todo_Storage = [
+				...todo_Storage.filter(item => item !== null),
+				new_Todo
+			]
+
+			//update localStorage
+			localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== null)))
+
+			//empty fields 
+			popup_Input.value = ''
+			popup_Textarea.value = ''
+
+			//hide popup
+			popup.classList.remove("visible")
+
+			isFetching = false
+
+			popup_Accept.disabled = isFetching
+
+			render_Todo(todo_Storage)
+
+		}).catch(console.log.bind(console));
+
+
+	} else {
+		// show tip and highlight empty field
+
+		popup_Tip.style.height = "40px"
+
+		popup_Tip.style.opacity = 1
+
+		!popup_Input.value.length && (popup_Input.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+
+		!popup_Textarea.value.length && (popup_Textarea.style.boxShadow = "0 10px 10px rgba(230, 7, 7, 0.5)")
+
+		setTimeout(() => {
+			//hide tip
+			popup_Tip.style.height = "0px"
+
+			popup_Tip.style.opacity = 0
+
+			popup_Input.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+
+			popup_Textarea.style.boxShadow = "0 10px 10px rgba(0, 0, 0, 0.5)"
+
+		}, 3000);
+	}
+}
+//end========================
+
 //update/rerender todo listStyle: 
 const update_ToDo = (id, newText, newDate, newStatus) => {
+
 	let todo = todo_Storage.find(todo => todo && todo.id === +id)
+
 	newText ? todo.text = newText : null
+
 	newDate ? todo.date = format_Date(newDate) : null
+
 	newStatus ? todo.status = newStatus : null
-	//set timeout to let animation work before rerender
-	localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== ",")))
-	setTimeout(() => render_Todo(todo_Storage), 200);
+
+	const loader = document.querySelector(`.todo-loader-${id}`)
+
+	//switch on loader
+	loader.style.display = "block"
+
+	new Promise((resolve) => {
+
+		//make request to server
+		resolve(update_Todo(id, todo))
+
+	}).then(() => {
+
+		//set timeout to let animation work before rerender
+		localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== ",")))
+
+		setTimeout(() => render_Todo(todo_Storage), 200);
+
+		//switch off loader
+		loader.style.display = "none"
+
+	}).catch(console.log.bind(console));
+
 }
 //end=========================
 
 //remove todo
 const remove_ToDo = (event) => {
-	const id = +event.target.id
-	todo_Storage = [
-		...todo_Storage.filter(todo => todo.id !== id)
-	]
-	const removed = document.getElementById(`${id}`)
-	removed.style.left = "-150%"
-	localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== ",")))
-	setTimeout(() => render_Todo(todo_Storage), 500);
 
+	const id = +event.target.id
+
+	const loader = document.querySelector(`.todo-loader-${id}`)
+
+	//switch on loader
+	loader.style.display = "block"
+
+	new Promise((resolve) => {
+
+		//make request to server
+		resolve(delete_Todo(id))
+
+	}).then(() => {
+
+		//remove from "state"
+		todo_Storage = [
+			...todo_Storage.filter(todo => todo.id !== id)
+		]
+
+		//chosing deleted element
+		const removed = document.getElementById(`${id}`)
+
+		//shift it left
+		removed.style.left = "-150%"
+
+		//remove from localStorage
+		localStorage.setItem("todo_data", JSON.stringify(todo_Storage.filter(item => item !== ",")))
+
+		//switch off loader
+		loader.style.display = "none"
+
+		setTimeout(() => render_Todo(todo_Storage), 500);
+
+	}).catch(console.log.bind(console));
 }
 //end=========================
 
 //change date
 const change_Date = (event) => {
-	const old_Date = event.target.value//in case if user will change his mind
+
+	//in case if user will change his mind
+	const old_Date = event.target.value
+
 	event.target.type = "date"
+
 	event.target.addEventListener("change", (event) => update_ToDo(event.target.id, null, event.target.value, null))
+
 	event.target.addEventListener("focusout", (event) => {//back to previous date
 		event.target.type = "text"
 		event.target.value = old_Date
@@ -283,40 +627,99 @@ const change_Date = (event) => {
 }
 //end=========================
 
+
+
+let touch_Start = 0
+let touch_Shift
+
+function touch2Mouse(e) {
+	e.preventDefault();
+
+	let element = null
+
+	const id = e.target.id.replace("text-body-", "");
+
+	element = document.getElementById(+id)
+
+	let event = {
+		target: {
+			id: id
+		}
+	}
+
+	//swipe on todo to remove it
+	switch (e.type) {
+		case "touchstart": touch_Start = e.changedTouches[0].pageX; break;
+		case "touchend": {
+			touch_End = e.changedTouches[0].pageX
+			if (touch_Shift / 2 > 40) {
+				remove_ToDo(event)
+			}
+		}; break;
+		case "touchmove": {
+			touch_Shift = touch_Start - e.changedTouches[0].pageX
+			element.style.left = `-${touch_Shift}%`
+		}; break;
+		default: return;
+	}
+}
+
+
 //rendering of todo list
 const render_Todo = (todo_list) => {
+
+	//remove old content
 	todo_Holder.innerHTML = ""
+
+	//render new content
 	todo_list.forEach(todo => {
 		todo_Holder.innerHTML += `
- 		<div id="${todo.id}" data-status="${todo.status}" class="todo-item">
- 			<div class="todo-item__title">
- 				<div class="todo-item__title_checkbox ">
- 					<label id="${todo.id}" data-type="checkbox" for="check" class="${todo.status === successful ? "checked" : null}"></label>
- 					<input id="${todo.id}"  data-type="date" value="${todo.date}" type="text" class="todo-item__title_date"></input>
- 				</div>
- 				<div class="todo-item__title_buttons">
- 					<button id="${todo.id}" data-type="edit" class="todo-item__title_buttons__edit"></button>
- 					<button id="${todo.id}" data-type="remove" class="todo-item__title_buttons__remove"></button>
- 				</div>
- 			</div>
- 			<div class="todo-item__body ${todo.status === successful ? "done" : null}" id="text-body-${todo.id}">${todo.text}</div>
- 			<small class="todo-item__body_edit-tip">double click to edit</small>
- 		 </div>`
+		<div id="${todo.id}" data-status="${todo.status}" class="todo-item">
+			<div id="${todo.id}" class="todo-item__title">
+				<div class="todo-item__title_checkbox ">
+					<label id="${todo.id}" data-type="checkbox" for="check" class="${todo.status === successful ? "checked" : null}"></label>
+					<input id="${todo.id}"  data-type="date" value="${todo.date}" type="text" class="todo-item__title_date"></input>
+				</div>
+				<div id="${todo.id}" class="todo-item__title_buttons">
+					<button id="${todo.id}" data-type="edit" class="todo-item__title_buttons__edit"></button>
+					<button id="${todo.id}" data-type="remove" class="todo-item__title_buttons__remove"></button>
+				</div>
+			</div>
+			<div  class="todo-item__body ${todo.status === successful ? "done" : null}" id="text-body-${todo.id}">${todo.text}</div>
+			<div class="todo-loader todo-loader-${todo.id}" ><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+		</div>`
 	});
-	console.log("rerender")
+
+	console.info("%c ---< RE-RENDER >--- ", rendering);
+
 	//updating stats
 	const rendered_todo_List = document.querySelectorAll(".todo-item")
+
 	const countItems = (list, type) => Array.from(list).filter(item => item.dataset.status === type).length
+
 	stats_Scope.innerText = Array.from(rendered_todo_List).length
+
 	stats_Active.innerText = countItems(rendered_todo_List, active)
+
 	stats_Successful.innerText = countItems(rendered_todo_List, successful)
 	//end==========================
+
+
+
 	//adding event listeners to each todo 
 	const addListeners = () => {
+
 		rendered_todo_List.forEach(todo_item => {
+
+			//button listeners
 			todo_item.children[0].addEventListener("click", (event) => todo_Header_Handler(event))
-			todo_item.children[1].addEventListener("dblclick", (event) => todo_Body_Handler(event.target))
+
+			//swipe listeners
+			todo_item.children[1].addEventListener("touchstart", touch2Mouse, true);
+			todo_item.children[1].addEventListener("touchmove", touch2Mouse, true);
+			todo_item.children[1].addEventListener("touchend", touch2Mouse, true);
 		})
+
 		new_Todo_Button.addEventListener("click", create_New_Todo)
 		extra_Add_Todo.addEventListener("click", create_New_Todo)
 	}
@@ -325,16 +728,9 @@ const render_Todo = (todo_list) => {
 }
 //end=========================
 
-//render of todo list
-render_Todo(todo_Storage)
-//end=======================
-
-
-
-
-
-
-
+// get data and render of todo list
+getData(url)
+// //end=======================
 
 
 
