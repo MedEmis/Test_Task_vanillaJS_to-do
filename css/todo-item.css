@@ -134,9 +134,15 @@
   height: 20px;
   margin: 2px;
   background: center/contain no-repeat url("./../assets/done.svg");
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  color: #889dea;
+}
+
+.todo-item__title_buttons__edit.to-save:hover {
+  background: center/contain no-repeat url("./../assets/done.svg");
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
-  color: #889dea;
 }
 
 .todo-item__title_buttons__edit:hover {

@@ -85,9 +85,14 @@
 					height: 20px;
 					margin: 2px;
 					background: center / contain no-repeat url("./../assets/done.svg");
-					transform: scale(1.2);
+					transform: scale(1);
 					color: $violet;
+					&:hover {
+						background: center / contain no-repeat url("./../assets/done.svg");
+						transform: scale(1.2);
+					}
 				}
+
 				&:hover {
 					background: url("./../assets/edit-active.svg");
 					transform: scale(1.2);

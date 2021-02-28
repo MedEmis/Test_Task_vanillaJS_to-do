@@ -4,7 +4,7 @@ const failure = ['background: red', 'color: white', 'display: block', 'text-alig
 const rendering = ['background: orange', 'color: black', 'display: block', 'text-align: center'].join(';');
 //end============================
 
-//api url < json-placeholder >
+//api url for < json-placeholder >
 const url = 'https://my-json-server.typicode.com/MedEmis/Test_Task_vanillaJS_to-do/todo'
 //end============================
 
@@ -27,6 +27,9 @@ const app_notify_About = (event, id) => {
 		moved: "child_moved"
 	}
 
+	//removing old listeners
+	id ? database.ref("todo").child(id).off(events[event]) : null
+
 	//triggering any action depends on action type
 	database.ref("todo").once(events[event], () => {
 
@@ -35,32 +38,56 @@ const app_notify_About = (event, id) => {
 
 			//asking about what exactly was changed
 			database.ref("todo").child(id).on("value", (update) => {
-				console.info(`%c---< FIREBASE UPDATED >---`, success);
-				console.table(update.val());
+				console.info(`%c---< FIREBASE UPDATED in child #${id} >---`, success);
+				//if there a new value => show it
+				update.val() ? console.table(update.val()) : null
 			})
 		} else {
 
 			//executing action
-			console.info(`%c---< FIREBASE ${events[event].toUpperCase()} >---`, success);
+			console.info(`%c---< FIREBASE ${events[event].toUpperCase()} ${id ? "#" + id : ""} >---`, success);
 		}
 	})
 }
 
 const firebase_CREATE = (todo) => {
 
-	app_notify_About("create")
+	app_notify_About("create", todo.id)
 
+	//create request
 	todo_Root(todo.id).set(todo)
 }
 
 const firebase_READ = async () => {
 
-	app_notify_About("update")
+	//app_notify_About("update")
 
+	//get data request
 	await database.ref("todo").once('value')
 		.then((snapshot) => {
-			console.log(snapshot.val())
-			localStorage.setItem("todo_data", JSON.stringify(snapshot.val().filter(item => item !== null)))
+
+			const data = snapshot.val()
+
+			//in case if firebase returning an object instead of array
+			if (!Array.isArray(data)) {
+
+				let newArray = []
+
+				//converting object to array
+				for (const key in data) {
+					newArray.push(data[key])
+				}
+
+				//and saving in local storage
+				localStorage.setItem("todo_data", JSON.stringify(newArray.filter(item => item !== null)))
+
+			} else if (Array.isArray(data)) {
+
+				//saving in local storage
+				localStorage.setItem("todo_data", JSON.stringify(data.filter(item => item !== null)))
+			}
+
+
 		}).catch((error) => {
 			console.error(`%c ${error}`, failure)
 		})
@@ -70,19 +97,21 @@ const firebase_UPDATE = async (todo,) => {
 
 	app_notify_About("value", todo.id)
 
+	//update request
 	//can update old or create new field in object
 	await todo_Root(todo.id).update(todo)
 }
 
 const firebase_DELETE = async (id) => {
 
-	app_notify_About("delete")
+	app_notify_About("delete", id)
 
+	//delete request
 	await todo_Root(id).remove()
 }
 
 const loader = document.querySelector(".web-loader")
-//switch on loader
+//switch on loader  (will be switched off after receiving data from db in getData() )
 loader.style.display = "block"
 let isFetching = false
 //firebase C.R.U.D methods end============================
@@ -122,8 +151,6 @@ const getData = async (url) => {
 	// will be run at the end code below render function expression
 	try {
 
-
-
 		//if no data in localStorage...
 		if (!JSON.parse(localStorage.getItem("todo_data")) || !JSON.parse(localStorage.getItem("todo_data")).length) {
 
@@ -149,8 +176,6 @@ const getData = async (url) => {
 				//anf after render todo list from localStorage
 				todo_Storage = JSON.parse(localStorage.getItem("todo_data"))
 
-				console.log("daddada", todo_Storage)
-
 				render_Todo(todo_Storage)
 
 			}).catch(console.log.bind(console));
@@ -169,7 +194,6 @@ const getData = async (url) => {
 
 	}
 }
-
 //end==========================
 
 //make post to DB 
@@ -252,7 +276,7 @@ const update_Todo = async (id, new_Todo) => {
 
 		isFetching = false
 
-		console.info(`%c---< APP TODO ${id} UPDATED with => >---`, success);
+		console.info(`%c---< APP TODO #${id} UPDATED >---`, success);
 
 	} catch (error) {
 
